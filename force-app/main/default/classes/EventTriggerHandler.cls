@@ -5,7 +5,7 @@ public with sharing class EventTriggerHandler {
             newCampXEvent.CAMPX__Status__c = 'Planning';
         }
     }
-    public static void handleAfterUpdate(
+    public static void handleBeforeUpdate(
         List<CampX__Event__c> campXEventForUpdate, 
         Map<Id, CampX__Event__c> oldCampXEventMap){
             // When the CAMPX__Status__c field is edited, the CAMPX__StatusChangeDate__c field

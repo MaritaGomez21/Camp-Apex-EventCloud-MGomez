@@ -1,4 +1,4 @@
-public with sharing class EventTriggerHandler {
+public with sharing class CAMPXEventTriggerHandler {
     public static void handleBeforeInsert(List<CampX__Event__c> newCampXEventList){
         // Loop through each new campX event and update status to "Planning" 
         // and status change date to current date for timeline tracking and accountability.

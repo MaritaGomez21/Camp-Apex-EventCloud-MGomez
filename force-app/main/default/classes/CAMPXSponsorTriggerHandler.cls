@@ -4,6 +4,13 @@ public with sharing class CAMPXSponsorTriggerHandler {
         for(CampX__Sponsor__c newCampXSponsor : newCampXSponsorList){
             if (newCampXSponsor.CAMPX__Status__c == NULL) {
             newCampXSponsor.CAMPX__Status__c = 'Pending';
+
+                if(newCampXSponsor.CAMPX__Email__c == NULL){
+                    newCampXSponsor.CAMPX__Email__c.addError('A sponsor can not be created without an email address');
+                }
+            }
+            if(newCampXSponsor.CAMPX__Email__c == NULL){
+                newCampXSponsor.CAMPX__Email__c.addError('A sponsor can not be created without an email address');
             }
         }
     }

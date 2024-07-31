@@ -28,7 +28,10 @@ public with sharing class CAMPXSponsorTriggerHandler {
         }
     }
     public static void handleBeforeUpdate(
-        List<CampX__Sponsor__c> newCampXSponsorList, Map<Id,CampX__Sponsor__c> oldCampXSponsorMap){
+        List<SObject> newSobjs, Map<Id,SObject> oldSobjsMap){
+
+            List<CAMPX__Sponsor__c> newCampXSponsorList = (List<CAMPX__Sponsor__c>) newSobjs;
+            Map<Id, CAMPX__Sponsor__c> oldCampXSponsorMap = (Map<Id, CAMPX__Sponsor__c>)oldSobjsMap;
 
         // Loop through each updated campX Event record
         for (CAMPX__Sponsor__c newSponsor : newCampXSponsorList) {
@@ -37,8 +40,7 @@ public with sharing class CAMPXSponsorTriggerHandler {
             CAMPX__Sponsor__c oldSponsor = oldCampXSponsorMap.get(newSponsor.Id);
 
             // Check the ContributionAmount
-            if (newSponsor.CAMPX__ContributionAmount__c!= NULL || 
-                newSponsor.CAMPX__ContributionAmount__c > 0) {
+            if (newSponsor.CAMPX__ContributionAmount__c!= NULL) {
                     if (newSponsor.CAMPX__ContributionAmount__c >= 5000) {
                         newSponsor.CAMPX__Tier__c = 'Gold';
                     } 

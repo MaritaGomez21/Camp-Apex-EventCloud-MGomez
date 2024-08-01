@@ -8,4 +8,5 @@ trigger CAMPXSponsorTrigger on CAMPX__Sponsor__c (before insert, before update) 
             CAMPXSponsorTriggerHandler.handleBeforeUpdate(trigger.new, trigger.oldmap);
         }
     }
+    
 }

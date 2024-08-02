@@ -5,6 +5,7 @@ public with sharing class CAMPXEventTriggerHandler {
         for(CampX__Event__c newCampXEvent : newCampXEventList){
             newCampXEvent.CAMPX__Status__c = 'Planning';
             newCampXEvent.CAMPX__StatusChangeDate__c = DateTime.now();
+            CampXEventTriggerHandler.updateNetRevenueHelper(newCampXEventList);
         }
     }
     
@@ -23,7 +24,25 @@ public with sharing class CAMPXEventTriggerHandler {
             if (newEvent.CAMPX__Status__c != oldEvent.CAMPX__Status__c) {
                 newEvent.CAMPX__StatusChangeDate__c = DateTime.now();
             }
+            CampXEventTriggerHandler.updateNetRevenueHelper(newCampXEventList);
         }
     }
+    public static void updateNetRevenueHelper(List<CampX__Event__c> newCampXEventList){
+        
+        // Instatiate variables
+        Decimal netRevenue;
 
+        // Loop through each new campX event and check for null
+        for(CampX__Event__c newCampXEvent : newCampXEventList){
+
+            if( newCampXEvent.CAMPX__GrossRevenue__c == null || 
+                newCampXEvent.CAMPX__TotalExpenses__c == null){
+                    newCampXEvent.CAMPX__NetRevenue__c = null;
+            } else {
+                netRevenue = newCampXEvent.CAMPX__GrossRevenue__c - 
+                newCampXEvent.CAMPX__TotalExpenses__c;
+            }
+            newCampXEvent.CAMPX__NetRevenue__c = netRevenue;
+        }
+    }
 }

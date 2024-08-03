@@ -7,7 +7,7 @@ trigger CAMPXSponsorTrigger on CAMPX__Sponsor__c (before insert, before update, 
         if (Trigger.isBefore) {
             CAMPXSponsorTriggerHandler.handleBeforeUpdate(trigger.new, trigger.oldmap);
         } else if (Trigger.isAfter) {
-            CAMPXSponsorTriggerHandler.handleAfterUpdate(trigger.new, trigger.oldmap);
+            //CAMPXSponsorTriggerHandler.handleAfterUpdate(trigger.new, trigger.oldmap);
         }
     }
     

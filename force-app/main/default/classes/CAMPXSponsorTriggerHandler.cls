@@ -25,40 +25,10 @@ public with sharing class CAMPXSponsorTriggerHandler {
 
             // Use the map method "get" to retrieve the old event record from the map.
             CAMPX__Sponsor__c oldSponsor = oldCampXSponsorMap.get(newSponsor.Id);
-
-            }
-        //Removed the following validation for situations when a sponsor is dissociated from an event
-        //CAMPXSponsorTriggerHandler.helperSponsorAssociation(newCampXSponsorList);
-
-        CAMPXSponsorTriggerHandler.helperUpdateSponsorTier(newCampXSponsorList);
-    }
-
-    
-    /*public static void handleAfterUpdate(List<SObject> newSobjs, Map<Id,SObject> oldSobjsMap){
-        // Instantiate variables
-        List<CAMPX__Sponsor__c> newCampXSponsorList = (List<CAMPX__Sponsor__c>) newSobjs;
-        Map<Id, CAMPX__Sponsor__c> oldCampXSponsorMap = (Map<Id, CAMPX__Sponsor__c>)oldSobjsMap;
-        Set<CAMPX__Event__c> eventSet = new Set<CAMPX__Event__c>();
-        Decimal totalContributedAmount;
-        
-        // Loop through each updated campX Sponsor record
-        for (CAMPX__Sponsor__c newSponsor : newCampXSponsorList) {
-
-            // Use the map method "get" to retrieve the old event record from the map.
-            CAMPX__Sponsor__c oldSponsor = oldCampXSponsorMap.get(newSponsor.Id);
-
-        
-            }
-            }
-    }*/
-
-    public static void helperSponsorAssociation(List<CampX__Sponsor__c> newCampXSponsorList){
-        for(CampX__Sponsor__c newSponsor : newCampXSponsorList){
-            // Check if acceptated sponsor record is related to an event to maintain meaningful relationships
-            if (newSponsor.CAMPX__Status__c == 'Accepted' && newSponsor.CAMPX__Event__c == NULL){
-                newSponsor.CAMPX__Status__c.addError('A Sponsor must be associated with an event before being Accepted.');
-            }
         }
+        CAMPXSponsorTriggerHandler.helperUpdateSponsorTier(newCampXSponsorList);
+        //Removed the following validation for situations when a sponsor is dissociated from an event
+        CAMPXSponsorTriggerHandler.helperSponsorAssociation(newCampXSponsorList);
     }
 
     public static void helperUpdateSponsorTier(List<CampX__Sponsor__c> newCampXSponsorList){
@@ -80,4 +50,33 @@ public with sharing class CAMPXSponsorTriggerHandler {
             }
         }
     }
+    
+    public static void helperSponsorAssociation(List<CampX__Sponsor__c> newCampXSponsorList){
+        for(CampX__Sponsor__c newSponsor : newCampXSponsorList){
+            // Check if acceptated sponsor record is related to an event to maintain meaningful relationships
+            if (newSponsor.CAMPX__Status__c == 'Accepted' && newSponsor.CAMPX__Event__c == NULL){
+                newSponsor.CAMPX__Status__c.addError('A Sponsor must be associated with an event before being Accepted.');
+            }
+        }
+    }
+
+    
 }
+
+   /*public static void handleAfterUpdate(List<SObject> newSobjs, Map<Id,SObject> oldSobjsMap){
+        // Instantiate variables
+        List<CAMPX__Sponsor__c> newCampXSponsorList = (List<CAMPX__Sponsor__c>) newSobjs;
+        Map<Id, CAMPX__Sponsor__c> oldCampXSponsorMap = (Map<Id, CAMPX__Sponsor__c>)oldSobjsMap;
+        Set<CAMPX__Event__c> eventSet = new Set<CAMPX__Event__c>();
+        Decimal totalContributedAmount;
+        
+        // Loop through each updated campX Sponsor record
+        for (CAMPX__Sponsor__c newSponsor : newCampXSponsorList) {
+
+            // Use the map method "get" to retrieve the old event record from the map.
+            CAMPX__Sponsor__c oldSponsor = oldCampXSponsorMap.get(newSponsor.Id);
+
+        
+            }
+            }
+    }*/
